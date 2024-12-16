@@ -112,10 +112,10 @@ class PhpFlickr
      * @param string[] $request Array of request parameters ('api_sig' will be discarded).
      * @return string[]
      */
-    public function getCached($request): ?array
+    public function getCached($request): array|bool
     {
         //Checks for a cached result to the request.
-        //If there is no cache result, it returns a value of null. If it finds one,
+        //If there is no cache result, it returns a value of false. If it finds one,
         //it returns the unparsed XML.
         unset($request['api_sig']);
         foreach ($request as $key => $value) {
@@ -132,10 +132,10 @@ class PhpFlickr
             if ($item->isHit()) {
                 return $item->get();
             } else {
-                return null;
+                return false;
             }
         }
-        return null;
+        return false;
     }
 
     /**
