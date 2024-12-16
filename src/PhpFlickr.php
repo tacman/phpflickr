@@ -112,10 +112,10 @@ class PhpFlickr
      * @param string[] $request Array of request parameters ('api_sig' will be discarded).
      * @return string[]
      */
-    public function getCached($request)
+    public function getCached($request): ?array
     {
         //Checks for a cached result to the request.
-        //If there is no cache result, it returns a value of false. If it finds one,
+        //If there is no cache result, it returns a value of null. If it finds one,
         //it returns the unparsed XML.
         unset($request['api_sig']);
         foreach ($request as $key => $value) {
@@ -132,10 +132,10 @@ class PhpFlickr
             if ($item->isHit()) {
                 return $item->get();
             } else {
-                return false;
+                return null;
             }
         }
-        return false;
+        return null;
     }
 
     /**
@@ -144,7 +144,7 @@ class PhpFlickr
      * @param mixed $response The value to cache.
      * @return bool Whether the cache was saved or not.
      */
-    protected function cache($request, $response)
+    protected function cache($request, $response): bool
     {
         //Caches the unparsed response of a request.
         unset($request['api_sig']);
@@ -191,7 +191,7 @@ class PhpFlickr
      * @return bool|mixed[]
      * @throws FlickrException If the request fails.
      */
-    public function request($command, $args = array(), $nocache = false)
+    public function request($command, $args = array(), $nocache = false): bool|array
     {
         // Make sure the API method begins with 'flickr.'.
         if (substr($command, 0, 7) !== "flickr.") {
@@ -229,7 +229,7 @@ class PhpFlickr
      * @param mixed $arr The node to normalize.
      * @return mixed
      */
-    protected function cleanTextNodes($arr)
+    protected function cleanTextNodes($arr): mixed
     {
         if (!is_array($arr)) {
             return $arr;
@@ -258,7 +258,7 @@ class PhpFlickr
      * Get an uploader with which to upload photos to (or replace photos on) Flickr.
      * @return Uploader
      */
-    public function uploader()
+    public function uploader(): Uploader
     {
         return new Uploader($this);
     }
@@ -268,7 +268,7 @@ class PhpFlickr
      * required if you're going to be retrieving an access token.
      * @return PhpFlickrService
      */
-    public function getOauthService($callbackUrl = 'oob')
+    public function getOauthService($callbackUrl = 'oob'): PhpFlickrService
     {
         if ($this->oauthService instanceof Flickr) {
             return $this->oauthService;
@@ -298,7 +298,7 @@ class PhpFlickr
      * required, for example for console usage.
      * @return UriInterface
      */
-    public function getAuthUrl($perm = 'read', $callbackUrl = 'oob')
+    public function getAuthUrl($perm = 'read', $callbackUrl = 'oob'): UriInterface
     {
         $service = $this->getOauthService($callbackUrl);
         $this->oauthRequestToken = $service->requestRequestToken();
@@ -319,7 +319,7 @@ class PhpFlickr
      * token).
      * @return \OAuth\Common\Token\TokenInterface|\OAuth\OAuth1\Token\TokenInterface|string
      */
-    public function retrieveAccessToken($verifier, $requestToken = null)
+    public function retrieveAccessToken($verifier, $requestToken = null): \OAuth\Common\Token\TokenInterface|\OAuth\OAuth1\Token\TokenInterface|string
     {
         $service = $this->getOauthService('oob');
         $storage = $this->getOauthTokenStorage();
@@ -349,7 +349,7 @@ class PhpFlickr
      * @return TokenStorageInterface
      * @throws FlickrException If the token storage has not been set yet.
      */
-    public function getOauthTokenStorage()
+    public function getOauthTokenStorage(): TokenStorageInterface
     {
         if (!$this->oauthTokenStorage instanceof TokenStorageInterface) {
             // If no storage has yet been set, create an in-memory one with an empty token.

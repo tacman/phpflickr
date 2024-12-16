@@ -11,7 +11,7 @@ class PhotosLicensesApi extends ApiMethodGroup
      * @return string[][] Each item has 'id', 'name', and 'url' elements, and the top level array
      * keys are also the license IDs.
      */
-    public function getInfo()
+    public function getInfo(): array
     {
         $licenses = [];
         $response = $this->flickr->request('flickr.photos.licenses.getInfo');
@@ -30,7 +30,7 @@ class PhotosLicensesApi extends ApiMethodGroup
      * that the "no known copyright restrictions" license (7) is not a valid argument.
      * @return bool
      */
-    public function setLicense($photoId, $licenseId)
+    public function setLicense($photoId, $licenseId): bool
     {
         $method = 'flickr.photos.licenses.setLicense';
         $params = ['photo_id' => $photoId, 'license_id' => $licenseId];

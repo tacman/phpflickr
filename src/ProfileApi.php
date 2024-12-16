@@ -13,7 +13,7 @@ class ProfileApi extends ApiMethodGroup
      * @param string $userId The NSID of the user to fetch profile information for.
      * @return array
      */
-    public function getProfile($userId)
+    public function getProfile($userId): array
     {
         $params = [
             'user_id' => $userId

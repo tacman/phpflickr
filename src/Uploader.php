@@ -59,7 +59,7 @@ class Uploader
         $contentType = null,
         $hidden = null,
         $async = false
-    ) {
+    ): array {
         $params = [
             'title' => $title,
             'description' => $description,
@@ -85,7 +85,7 @@ class Uploader
      * Processing photos asynchronously is recommended.
      * @return string[]
      */
-    public function replace($photoFilename, $photoId, $async = null)
+    public function replace($photoFilename, $photoId, $async = null): array
     {
         return $this->sendFile($photoFilename, ['photo_id' => $photoId, 'async' => $async]);
     }
@@ -97,7 +97,7 @@ class Uploader
      * @throws Exception If an OAuth error occurs.
      * @throws FlickrException If the file can't be read.
      */
-    protected function sendFile($filename, $params)
+    protected function sendFile($filename, $params): array
     {
         if (!is_readable($filename)) {
             throw new FlickrException("File not readable: $filename");

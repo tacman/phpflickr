@@ -15,7 +15,7 @@ class TestApi extends ApiMethodGroup
      * @param array $args
      * @return string[]|bool
      */
-    public function testEcho(array $args = [])
+    public function testEcho(array $args = []): array|bool|null
     {
         return $this->flickr->request('flickr.test.echo', $args, true);
     }
@@ -27,7 +27,7 @@ class TestApi extends ApiMethodGroup
      * @return string[]|bool An array with 'id', 'username' and 'path_alias' keys,
      * or false if unable to log in.
      */
-    public function login()
+    public function login(): array|bool
     {
         try {
             $response = $this->flickr->request('flickr.test.login', [], true);

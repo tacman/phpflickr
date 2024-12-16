@@ -13,7 +13,7 @@ class PeopleApi extends ApiMethodGroup
      * @param string $findEmail The email address of the user to find (may be primary or secondary).
      * @return string|bool
      */
-    public function findByEmail($findEmail)
+    public function findByEmail($findEmail): string|bool
     {
         $response = $this->flickr->request(
             'flickr.people.findByEmail',
@@ -31,7 +31,7 @@ class PeopleApi extends ApiMethodGroup
      * @param string $username The username of the user to lookup.
      * @return string|bool
      */
-    public function findByUsername($username)
+    public function findByUsername($username): string|bool
     {
         $response = $this->flickr->request(
             'flickr.people.findByUsername',
@@ -147,7 +147,7 @@ class PeopleApi extends ApiMethodGroup
         $extras = null,
         $perPage = 100,
         $page = 1
-    ) {
+    ): array|bool {
         $params = [
             'user_id' => $userId,
             'safe_search' => $safeSearch,

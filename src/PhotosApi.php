@@ -57,7 +57,7 @@ class PhotosApi extends ApiMethodGroup
      * within tag names will be removed.
      * @return bool True if no error occured.
      */
-    public function addTags($photoId, $tags)
+    public function addTags($photoId, $tags): bool
     {
         $tagString = $tags;
         if (is_array($tags)) {
@@ -84,7 +84,7 @@ class PhotosApi extends ApiMethodGroup
      * @param $photoId string The ID of the photo to delete.
      * @return bool
      */
-    public function delete($photoId)
+    public function delete($photoId): bool
     {
         return (bool)$this->flickr->request('flickr.photos.delete', ['photo_id' => $photoId], true);
     }
@@ -98,7 +98,7 @@ class PhotosApi extends ApiMethodGroup
      * @param $photoId string The photo to return information for.
      * @return bool
      */
-    public function getAllContexts($photoId)
+    public function getAllContexts($photoId): bool
     {
         return $this->flickr->request('flickr.photos.getAllContexts', ['photo_id' => $photoId]);
     }
@@ -126,7 +126,7 @@ class PhotosApi extends ApiMethodGroup
         $singlePhoto = null,
         $includeSelf = null,
         $extras = null
-    ) {
+    ): mixed {
         if (is_array($extras)) {
             $extras = join(',', $extras);
         }
@@ -166,7 +166,7 @@ class PhotosApi extends ApiMethodGroup
         $singlePhoto = null,
         $includeSelf = null,
         $extras = null
-    ) {
+    ): mixed {
         if (is_array($extras)) {
             $extras = join(',', $extras);
         }
@@ -191,7 +191,7 @@ class PhotosApi extends ApiMethodGroup
      * @param $photoId string The ID of the photo to fetch the context for.
      * @return mixed
      */
-    public function getContext($photoId)
+    public function getContext($photoId): mixed
     {
         return $this->flickr->request('flickr.photos.getContext', ['photo_id' => $photoId]);
     }
@@ -208,7 +208,7 @@ class PhotosApi extends ApiMethodGroup
      * return counts for. They should be specified smallest first.
      * @return bool
      */
-    public function getCounts($dates = null, $takenDates = null)
+    public function getCounts($dates = null, $takenDates = null): bool
     {
         if (is_array($dates)) {
             $dates = join(',', $dates);
@@ -232,7 +232,7 @@ class PhotosApi extends ApiMethodGroup
      * skipped. This enables the 'sharing' of individual photos by passing around the ID and secret.
      * @return mixed
      */
-    public function getExif($photoId, $secret = null)
+    public function getExif($photoId, $secret = null): mixed
     {
         $response = $this->flickr->request('flickr.photos.getExif', ['photo_id' => $photoId, 'secret' => $secret]);
         return isset($response['photo']) ? $response['photo'] : false;
@@ -250,7 +250,7 @@ class PhotosApi extends ApiMethodGroup
      * maximum allowed value is 50.
      * @return mixed
      */
-    public function getFavorites($photoId, $page = null, $perPage = null)
+    public function getFavorites($photoId, $page = null, $perPage = null): mixed
     {
         $params = ['photo_id' => $photoId, 'page' => $page, 'per_page' => $perPage];
         $response = $this->flickr->request('flickr.photos.getFavorites', $params);
@@ -269,7 +269,7 @@ class PhotosApi extends ApiMethodGroup
      * around the id and secret.
      * @return string[]|bool
      */
-    public function getInfo($photoId, $secret = null)
+    public function getInfo($photoId, $secret = null): array|bool
     {
         $params = ['photo_id' => $photoId, 'secret' => $secret];
         $response = $this->flickr->request('flickr.photos.getInfo', $params);
@@ -445,7 +445,7 @@ class PhotosApi extends ApiMethodGroup
      * current calling user).
      * @return string[][]|bool Set information, or false if none found (or an error occured).
      */
-    public function getSets($photoIds, $userId = null)
+    public function getSets($photoIds, $userId = null): array|bool
     {
         $out = [];
         $photoIdsString = join(',', $photoIds);
@@ -492,7 +492,7 @@ class PhotosApi extends ApiMethodGroup
      * @param int $photoId The ID of the photo to fetch size information for.
      * @return string[]|bool
      */
-    public function getSizes($photoId)
+    public function getSizes($photoId): array|bool
     {
         $response = $this->flickr->request(
             'flickr.photos.getSizes',
@@ -508,7 +508,7 @@ class PhotosApi extends ApiMethodGroup
      * @param int $photoId The ID of the photo to fetch size information for.
      * @return string[]|bool
      */
-    public function getLargestSize($photoId)
+    public function getLargestSize($photoId): array|bool
     {
         $sizes = $this->getSizes($photoId);
         if (!$sizes) {
@@ -806,7 +806,7 @@ class PhotosApi extends ApiMethodGroup
      * @param array $args See the Flickr API link above for details of the permitted keys of this array.
      * @return array|bool
      */
-    public function search($args)
+    public function search($args): array|bool
     {
         $result = $this->flickr->request('flickr.photos.search', $args);
         return isset($result['photos']) ? $result['photos'] : false;
@@ -850,7 +850,7 @@ class PhotosApi extends ApiMethodGroup
         DateTime|null $dateTaken = null,
         $dateTakenGranularity = null,
         DateTime|null $datePosted = null
-    ) {
+    ): bool {
         $args = ['photo_id' => $photoId];
         if (!empty($dateTaken)) {
             $args['date_taken'] = $dateTaken->format('Y-m-d H:i:s');
@@ -877,7 +877,7 @@ class PhotosApi extends ApiMethodGroup
      * @return bool True on success.
      * @throws FlickrException If neither $title or $description is set.
      */
-    public function setMeta($photoId, $title = null, $description = null)
+    public function setMeta($photoId, $title = null, $description = null): bool
     {
         if (empty($title) && empty($description)) {
             throw new FlickrException('$title or $description must be set');
@@ -960,7 +960,7 @@ class PhotosApi extends ApiMethodGroup
      * be quoted).
      * @return bool
      */
-    public function setTags($photoId, $tags)
+    public function setTags($photoId, $tags): bool
     {
         $result = $this->flickr->request('flickr.photos.setTags', ['photo_id' => $photoId, 'tags' => $tags], true);
         return isset($result['stat']) && $result['stat'] === 'ok';

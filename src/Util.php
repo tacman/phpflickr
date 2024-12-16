@@ -21,7 +21,7 @@ class Util
      * @param int $num
      * @return string
      */
-    public static function base58encode($num)
+    public static function base58encode($num): string
     {
         $base_count = strlen(static::BASE58_ALPHABET);
         $encoded = '';
@@ -45,7 +45,7 @@ class Util
      * @param string $num
      * @return bool|int
      */
-    public static function base58decode($num)
+    public static function base58decode($num): bool|int
     {
         $decoded = 0;
         $multi = 1;
@@ -65,7 +65,7 @@ class Util
      * @param bool $isFamily
      * @return int
      */
-    public static function privacyLevel($isPublic, $isFriend, $isFamily)
+    public static function privacyLevel($isPublic, $isFriend, $isFamily): int
     {
         if ($isPublic) {
             return static::PRIVACY_PUBLIC;
@@ -86,7 +86,7 @@ class Util
      * Get all privacy levels.
      * @return array
      */
-    public static function getPrivacyLevels()
+    public static function getPrivacyLevels(): array
     {
         return [
             'public' => static::PRIVACY_PUBLIC,
@@ -102,7 +102,7 @@ class Util
      * @param int $id The value of one of the PRIVACY_* constants.
      * @return string|bool The name of the privacy leve, or false if it doesn't exist.
      */
-    public static function getPrivacyLevelById($id)
+    public static function getPrivacyLevelById($id): string|bool
     {
         $privacyLevels = array_flip(static::getPrivacyLevels());
         if (!isset($privacyLevels[$id])) {

@@ -14,7 +14,7 @@ class PhotosetsApi extends ApiMethodGroup
      * @param int $photoId
      * @return bool
      */
-    public function addPhoto($photosetId, $photoId)
+    public function addPhoto($photosetId, $photoId): bool
     {
         $args = [
             'photoset_id' => $photosetId,
@@ -37,7 +37,7 @@ class PhotosetsApi extends ApiMethodGroup
      * to the calling user.
      * @return bool|mixed[]
      */
-    public function create($title, $description, $primaryPhotoId)
+    public function create($title, $description, $primaryPhotoId): bool|array
     {
         $args = [
             'title' => $title,
@@ -54,7 +54,7 @@ class PhotosetsApi extends ApiMethodGroup
      * @param int $photosetId The id of the photoset to delete. It must be owned by the calling user.
      * @return bool
      */
-    public function delete($photosetId)
+    public function delete($photosetId): bool
     {
         $args = ['photoset_id' => $photosetId];
         return (bool)$this->flickr->request('flickr.photosets.delete', $args, true);
@@ -71,7 +71,7 @@ class PhotosetsApi extends ApiMethodGroup
      * @param string|null $description A description of the photoset. May contain limited HTML.
      * @return bool
      */
-    public function editMeta($photosetId, $title, $description = null)
+    public function editMeta($photosetId, $title, $description = null): bool
     {
         $args = [
             'photoset_id' => $photosetId,
@@ -95,7 +95,7 @@ class PhotosetsApi extends ApiMethodGroup
      * existing list. Call flickr.photosets.addPhoto to append a photo to a set.
      * @return bool
      */
-    public function editPhotos($photosetId, $primaryPhotoId, $photoIds)
+    public function editPhotos($photosetId, $primaryPhotoId, $photoIds): bool
     {
         if (is_array($photoIds)) {
             $photoIds = join(',', $photoIds);
@@ -118,7 +118,7 @@ class PhotosetsApi extends ApiMethodGroup
      * @param int $photosetId The ID of the photoset for which to fetch the photo's context.
      * @return mixed[] Array with 'prevphoto' and 'nextphoto' keys.
      */
-    public function getContext($photoId, $photosetId)
+    public function getContext($photoId, $photosetId): array
     {
         $args = [
             'photo_id' => $photoId,
@@ -137,7 +137,7 @@ class PhotosetsApi extends ApiMethodGroup
      * @param string $userId The ID of the owner of the set passed in $photosetId.
      * @return mixed[]|bool
      */
-    public function getInfo($photosetId, $userId)
+    public function getInfo($photosetId, $userId): array|bool
     {
         $args = [
             'photoset_id' => $photosetId,
@@ -180,7 +180,7 @@ class PhotosetsApi extends ApiMethodGroup
         $primaryPhotoExtras = null,
         $photoIds = null,
         $sortGroups = null
-    ) {
+    ): array|bool {
         $args = [
             'user_id' => $userId,
             'page' => $page,
@@ -223,7 +223,7 @@ class PhotosetsApi extends ApiMethodGroup
         $page = null,
         $privacyFilter = null,
         $media = null
-    ) {
+    ): array|bool {
         if (is_array($extras)) {
             $extras = join(',', $extras);
         }
@@ -251,7 +251,7 @@ class PhotosetsApi extends ApiMethodGroup
      * ordered by their IDs.
      * @return bool
      */
-    public function orderSets($photosetIds)
+    public function orderSets($photosetIds): bool
     {
         if (is_array($photosetIds)) {
             $photosetIds = implode(",", $photosetIds);
@@ -270,7 +270,7 @@ class PhotosetsApi extends ApiMethodGroup
      * @param $photoId string The ID of the photo to remove from the set.
      * @return bool
      */
-    public function removePhoto($photosetId, $photoId)
+    public function removePhoto($photosetId, $photoId): bool
     {
         $params = ["photoset_id" => $photosetId, "photo_id" => $photoId];
         $response = $this->flickr->request("flickr.photosets.removePhoto", $params, true);
@@ -287,7 +287,7 @@ class PhotosetsApi extends ApiMethodGroup
      * @param $photoIds string|string[] Array or comma-delimited list of photo IDs to remove from the photoset.
      * @return bool
      */
-    public function removePhotos($photosetId, $photoIds)
+    public function removePhotos($photosetId, $photoIds): bool
     {
         if (is_array($photoIds)) {
             $photoIds = implode(",", $photoIds);
@@ -306,7 +306,7 @@ class PhotosetsApi extends ApiMethodGroup
      * list will keep their original order.
      * @return bool
      */
-    public function reorderPhotos($photosetId, $photoIds)
+    public function reorderPhotos($photosetId, $photoIds): bool
     {
         if (is_array($photoIds)) {
             $photoIds = implode(",", $photoIds);
@@ -324,7 +324,7 @@ class PhotosetsApi extends ApiMethodGroup
      * @param $photoId string The ID of the photo to set as primary.
      * @return bool
      */
-    public function setPrimaryPhoto($photosetId, $photoId)
+    public function setPrimaryPhoto($photosetId, $photoId): bool
     {
         $response = $this->flickr->request(
             'flickr.photosets.setPrimaryPhoto',

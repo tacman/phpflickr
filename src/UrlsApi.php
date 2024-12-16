@@ -12,7 +12,7 @@ class UrlsApi extends ApiMethodGroup
      * @param string $size The size to retrieve: one of the PhotosApi::SIZE_* constants.
      * @return string
      */
-    public function getImageUrl($photoInfo, $size = '')
+    public function getImageUrl($photoInfo, $size = ''): string
     {
         $size = strtolower($size);
 
@@ -67,7 +67,7 @@ class UrlsApi extends ApiMethodGroup
      * @param int $photoId
      * @return string
      */
-    public function getShortUrl($photoId)
+    public function getShortUrl($photoId): string
     {
         return 'https://flic.kr/p/' . Util::base58encode($photoId);
     }
@@ -81,7 +81,7 @@ class UrlsApi extends ApiMethodGroup
      * @param string $groupId The NSID of the group to fetch the URL for.
      * @return string|bool
      */
-    public function getGroup($groupId)
+    public function getGroup($groupId): string|bool
     {
         $response = $this->flickr->request('flickr.urls.getGroup', ['group_id' => $groupId]);
         return isset($response['group']['url']) ? $response['group']['url'] : false;
@@ -96,7 +96,7 @@ class UrlsApi extends ApiMethodGroup
      * @param string $userId The NSID of the user to fetch the URL for. If omitted, the calling user is assumed.
      * @return string|bool
      */
-    public function getUserPhotos($userId = null)
+    public function getUserPhotos($userId = null): string|bool
     {
         $response = $this->flickr->request('flickr.urls.getUserPhotos', ['user_id' => $userId]);
         return isset($response['user']['url']) ? $response['user']['url'] : false;
@@ -111,7 +111,7 @@ class UrlsApi extends ApiMethodGroup
      * @param string $userId The NSID of the user to fetch the URL for. If omitted, the calling user is assumed.
      * @return string|bool
      */
-    public function getUserProfile($userId = null)
+    public function getUserProfile($userId = null): string|bool
     {
         $response = $this->flickr->request('flickr.urls.getUserProfile', ['user_id' => $userId]);
         return isset($response['user']['url']) ? $response['user']['url'] : false;
@@ -124,7 +124,7 @@ class UrlsApi extends ApiMethodGroup
      * @param string $url The gallery's URL.
      * @return string|bool
      */
-    public function lookupGallery($url)
+    public function lookupGallery($url): string|bool
     {
         return $this->flickr->request('flickr.urls.lookupGallery', ['url' => $url]);
     }
@@ -138,7 +138,7 @@ class UrlsApi extends ApiMethodGroup
      * @param string $url The URL to the group's page or photo pool.
      * @return string|bool
      */
-    public function lookupGroup($url)
+    public function lookupGroup($url): string|bool
     {
         $response = $this->flickr->request('flickr.urls.lookupGroup', ['url' => $url]);
         return isset($response['group']) ? $response['group'] : false;
@@ -153,7 +153,7 @@ class UrlsApi extends ApiMethodGroup
      * @param string $url The URL to the user's profile or photos page.
      * @return string|bool
      */
-    public function lookupUser($url)
+    public function lookupUser($url): string|bool
     {
         $response = $this->flickr->request('flickr.urls.lookupUser', ['url' => $url]);
         return isset($response['user']) ? $response['user'] : false;

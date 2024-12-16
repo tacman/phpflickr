@@ -54,7 +54,7 @@ class PhpFlickrService extends Flickr
     /**
      * @return string
      */
-    public function service()
+    public function service(): string
     {
         // This is required because this service class isn't named 'Flickr' like its parent.
         return 'Flickr';
@@ -68,7 +68,7 @@ class PhpFlickrService extends Flickr
      * @param string $uri
      * @return string[]
      */
-    public function getAuthorizationForPostingToAlternateUrl($args, $uri)
+    public function getAuthorizationForPostingToAlternateUrl($args, $uri): array
     {
         $token = $this->storage->retrieveAccessToken($this->service());
         $this->signature->setTokenSecret($token->getAccessTokenSecret());
