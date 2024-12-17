@@ -31,6 +31,7 @@ use OAuth\Common\Storage\Memory;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\OAuth1\Service\Flickr;
 use OAuth\OAuth1\Token\StdOAuth1Token;
+use \OAuth\OAuth1\Token\TokenInterface as OAuth1TokenInterface;
 use OAuth\OAuth2\Token\TokenInterface;
 use OAuth\ServiceFactory;
 use Psr\Cache\CacheItemPoolInterface;
@@ -317,9 +318,9 @@ class PhpFlickr
      * @param string $requestToken The request token. Can be left out if this is being called on
      * the same object that started the authentication (i.e. it already has access to the request
      * token).
-     * @return \OAuth\Common\Token\TokenInterface|\OAuth\OAuth1\Token\TokenInterface|string
+     * @return TokenInterface|OAuth1TokenInterface|string
      */
-    public function retrieveAccessToken($verifier, $requestToken = null): \OAuth\Common\Token\TokenInterface|\OAuth\OAuth1\Token\TokenInterface|string
+    public function retrieveAccessToken($verifier, $requestToken = null): TokenInterface|OAuth1TokenInterface|string
     {
         $service = $this->getOauthService('oob');
         $storage = $this->getOauthTokenStorage();
