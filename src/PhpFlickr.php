@@ -31,7 +31,7 @@ use OAuth\Common\Storage\Memory;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\OAuth1\Service\Flickr;
 use OAuth\OAuth1\Token\StdOAuth1Token;
-use \OAuth\OAuth1\Token\TokenInterface as OAuth1TokenInterface;
+use OAuth\OAuth1\Token\TokenInterface as OAuth1TokenInterface;
 use OAuth\OAuth2\Token\TokenInterface;
 use OAuth\ServiceFactory;
 use Psr\Cache\CacheItemPoolInterface;
